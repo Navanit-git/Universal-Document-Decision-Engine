@@ -199,9 +199,18 @@ if uploaded_file:
     s1.metric("Document", document_type.replace("_", " ").title())
     s2.metric("Department", department.title())
 
-    if document_type in {"invoice", "receipt"} and total_amount is not None:
-        amount_text = f"{total_currency}{total_amount:,.2f}"
-        s3.metric("Total Amount", amount_text)
+    if document_type in {"invoice", "receipt"}:
+        payment_status = (
+            domain_decisions
+            .get("choices", {})
+            .get("payment_status", {})
+            .get("value", "unknown")
+        )
+
+        s3.metric(
+            "Payment Status",
+            payment_status.replace("_", " ").title(),
+        )
     elif document_type == "resume":
         has_experience = (
             domain_decisions

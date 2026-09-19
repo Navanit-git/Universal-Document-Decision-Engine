@@ -93,7 +93,28 @@ FINANCE_QUESTIONS = {
             "and evidence.purchase_order_references as direct supporting evidence when present."
         ),
     ),
-
+    "payment_status": Choice(
+    instructions=(
+        "What is the payment status represented by this document?"
+    ),
+    criteria={
+        "payment_requested": (
+            "The document is requesting payment or indicates an amount is due."
+        ),
+        "payment_completed": (
+            "The document is evidence that payment or a purchase has been completed."
+        ),
+        "partially_paid": (
+            "The document indicates that only part of the amount has been paid."
+        ),
+        "refunded": (
+            "The document indicates that a previous payment or purchase was refunded."
+        ),
+        "unknown": (
+            "The payment status cannot be determined from the available evidence."
+        ),
+    },
+),
     "has_invoice_number": Noul(
         instructions=(
             "Does the document contain an identifiable invoice number or invoice identifier?"
