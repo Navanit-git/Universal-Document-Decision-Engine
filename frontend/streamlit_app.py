@@ -187,10 +187,18 @@ if uploaded_file:
     if document_type in {"invoice", "receipt"} and total_amount is not None:
         amount_text = f"{total_currency}{total_amount:,.2f}"
         s3.metric("Total Amount", amount_text)
-    elif document_type == "resume" and experience_summary:
-        s3.metric("Experience", experience_summary)
     elif document_type == "resume":
-        s3.metric("Experience", "Not detected")
+        has_experience = (
+            domain_decisions
+            .get("nouls", {})
+            .get("has_experience", {})
+            .get("probability", 0.0)
+        )
+
+        s3.metric(
+            "Has Experience",
+            "Yes" if has_experience >= 0.5 else "No",
+        )
     else:
         s3.metric("Document Domain", domain.title())
 

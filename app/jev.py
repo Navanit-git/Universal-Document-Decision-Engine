@@ -125,23 +125,27 @@ HR_QUESTIONS = {
     "is_resume": Noul(
         instructions="Is the supplied document a person's resume or CV?",
     ),
-    "has_work_experience": Noul(
-        instructions="Does the document contain identifiable work experience or employment history?",
+    "has_experience": Noul(
+        instructions=(
+            "Does the document contain identifiable work experience "
+            "or employment history?"
+        ),
     ),
     "has_education": Noul(
-        instructions="Does the document contain identifiable education or academic background?",
+        instructions=(
+            "Does the document contain identifiable education "
+            "or academic background?"
+        ),
     ),
     "has_skills": Noul(
         instructions=(
-            "Does the document contain an identifiable skills, competencies, technologies, "
-            "or qualifications section?"
+            "Does the document contain an Artificial Intelligence, "
+            "computer science, or related skills sections?"
         ),
     ),
     "profile_completeness": Score(
         instructions=(
-            "How complete is the candidate profile for an initial recruitment workflow, "
-            "considering evidence such as work experience, education, skills, and other "
-            "standard resume information?"
+            "How complete is the candidate profile for Artificial Intelligence, computer science, or related roles based on the supplied evidence?s"
         ),
         criteria=PROFILE_COMPLETENESS_LEVELS,
     ),
