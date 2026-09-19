@@ -14,6 +14,9 @@ from app.jev import evaluate_document
 from app.router import decide_action
 from app.schemas import DocumentAnalysisResponse
 
+from dotenv import load_dotenv
+load_dotenv()
+
 ALLOWED_EXTENSIONS = {".pdf", ".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff"}
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 
