@@ -330,7 +330,6 @@ def _extract_document_evidence(document_text: str) -> dict[str, Any]:
         "purchase_order_references": po_references[:10],
         "total_amount": total_amount,
         "total_currency": total_currency,
-        "experience_summary": experience_summary,
     }
 
 
@@ -357,9 +356,9 @@ def evaluate_document(
     structured_evidence = structured_evidence or {}
 
     evidence = {
-        **structured_evidence,
-        **_extract_document_evidence(document_text),
-    }
+    **_extract_document_evidence(document_text),
+    **structured_evidence,
+        }
     state = {
         "document": document_text,
         "evidence": evidence,
