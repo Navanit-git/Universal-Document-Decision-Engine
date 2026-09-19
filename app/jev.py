@@ -245,9 +245,11 @@ def _extract_document_evidence(document_text: str) -> dict[str, Any]:
                 po_references.append(value)
 
     total_patterns = [
-        r"(?:TOTAL\s+DUE|TOTAL\s+AMOUNT|GRAND\s+TOTAL|TOTAL)\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
-        r"(?:AMOUNT\s+DUE)\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
-    ]
+    r"\bTOTAL\s+DUE\b\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
+    r"\bAMOUNT\s+DUE\b\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
+    r"\bGRAND\s+TOTAL\b\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
+    r"\bTOTAL\s+AMOUNT\b\s*[:#-]?\s*(?:USD\s*)?([$€£₹]?\s?[\d,]+(?:\.\d{2})?)",
+   ]
     total_amount: float | None = None
     total_currency = None
     for pattern in total_patterns:

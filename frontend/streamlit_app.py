@@ -161,9 +161,11 @@ if uploaded_file:
 
     all_choices = core.get("choices", {})
     all_nouls = {
-        **core.get("nouls", {}),
-        **domain_decisions.get("nouls", {}),
-    }
+    **core.get("nouls", {}),
+    **domain_decisions.get("nouls", {}),
+}
+
+ 
     all_scores = {
         **core.get("scores", {}),
         **domain_decisions.get("scores", {}),
@@ -174,6 +176,19 @@ if uploaded_file:
     total_amount = evidence.get("total_amount")
     total_currency = evidence.get("total_currency") or ""
     experience_summary = evidence.get("experience_summary")
+
+    # Resume-specific UI: hide generic routing signals
+    if document_type == "resume":
+            hidden_resume_nouls = {
+                "is_business_document",
+                "is_financial_document",
+                "requires_human_review",
+            }
+            all_nouls = {
+                key: value
+                for key, value in all_nouls.items()
+                if key not in hidden_resume_nouls
+            }
 
     # ---------------------------------------------------------
     # Simple business-facing summary
