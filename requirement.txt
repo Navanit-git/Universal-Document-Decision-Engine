@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+python-multipart
+docling
+typesafe-sdk
+streamlit

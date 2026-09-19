@@ -1,0 +1,21 @@
+docdecision/
+│
+├── app/
+│   ├── main.py
+│   ├── docling_parser.py
+│   ├── embeddings.py
+│   ├── jev.py
+│   ├── router.py
+│   └── schemas.py
+│
+├── data/
+│   └── documents/
+│
+├── tests/
+│   ├── test_invoice.py
+│   ├── test_receipt.py
+│   └── test_contract.py
+│
+├── .env
+├── pyproject.toml
+└── README.md
