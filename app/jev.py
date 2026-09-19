@@ -93,18 +93,54 @@ FINANCE_QUESTIONS = {
             "and evidence.purchase_order_references as direct supporting evidence when present."
         ),
     ),
-    "contains_payment_information": Noul(
+
+    "has_invoice_number": Noul(
         instructions=(
-            "Does the document contain information intended to facilitate or request "
-            "payment, such as amount due, payment instructions, bank details, cash, or change?"
+            "Does the document contain an identifiable invoice number or invoice identifier?"
         ),
     ),
+
+    "has_vendor_information": Noul(
+        instructions=(
+            "Does the document contain identifiable vendor or supplier information, "
+            "such as vendor name, address, contact details, or supplier identity?"
+        ),
+    ),
+
+    "has_payment_terms": Noul(
+        instructions=(
+            "Does the document contain identifiable payment terms or a payment due condition, "
+            "such as a due date, net terms, or 'due after 30 days'?"
+        ),
+    ),
+
+    "has_tax_information": Noul(
+        instructions=(
+            "Does the document contain identifiable tax information, such as sales tax, VAT, "
+            "GST, tax amount, or tax rate?"
+        ),
+    ),
+
     "has_line_items": Noul(
         instructions=(
             "Does the document contain identifiable purchased items, products, or services "
             "with quantities, prices, or amounts?"
         ),
     ),
+
+    "has_total_amount": Noul(
+        instructions=(
+            "Does the document contain an identifiable final amount due or total payable amount?"
+        ),
+    ),
+
+    "contains_payment_information": Noul(
+        instructions=(
+            "Does the document contain information intended to facilitate or request payment, "
+            "such as amount due, payment instructions, bank details, cash, or change?"
+        ),
+    ),
+
     "needs_po_review": Noul(
         instructions=(
             "For a finance or procurement workflow, does the document appear to need human "
@@ -112,6 +148,16 @@ FINANCE_QUESTIONS = {
             "is absent where it would be useful? Use the supplied purchase-order evidence."
         ),
     ),
+
+    "has_required_invoice_fields": Noul(
+        instructions=(
+            "Does the invoice contain the core information normally needed for an initial "
+            "automated invoice-processing workflow, including vendor identity, invoice number, "
+            "line items, and a final amount due, with purchase-order information considered "
+            "when applicable?"
+        ),
+    ),
+
     "automation_readiness": Score(
         instructions=(
             "How ready is this financial document for automated processing based on clarity, "
@@ -302,10 +348,18 @@ def _run_questions(
     return _serialize_response(response, score_levels)
 
 
-def evaluate_document(document_text: str) -> dict[str, Any]:
+def evaluate_document(
+    document_text: str,
+    structured_evidence: dict | None = None,
+) -> dict:
     """Evaluate one document with Jev's Choice, Noul, and Score primitives."""
     logger.info("Starting Jev evaluation on document snippet length=%d", len(document_text))
-    evidence = _extract_document_evidence(document_text)
+    structured_evidence = structured_evidence or {}
+
+    evidence = {
+        **structured_evidence,
+        **_extract_document_evidence(document_text),
+    }
     state = {
         "document": document_text,
         "evidence": evidence,

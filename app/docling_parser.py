@@ -49,6 +49,7 @@ class DoclingProcessor:
         return {
             "markdown": markdown[:MAX_EVIDENCE_CHARS],
             "full_markdown": markdown,
+            "tables": [...],
             "source": str(file_path),
             "status": str(result.status),
         }

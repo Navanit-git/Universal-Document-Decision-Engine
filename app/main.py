@@ -54,7 +54,10 @@ def process_document(
         len(parsed["full_markdown"]),
     )
 
-    jev_result = evaluate_document(parsed["markdown"])
+    jev_result = evaluate_document(
+            document_text=parsed["markdown"],
+            structured_evidence=parsed.get("structured_evidence", {}),
+        )
     action = decide_action(jev_result)
 
     core = jev_result["core"]
